@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    width: 100%;
+    margin-top: 50px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 108px;
+}
+
+.navigation {
+    list-style-type: none;
+    display: flex;
+}
+
+.logo {
+    font-size: 20px;
+    line-height: 36px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.navlink {
+    color: #fff;
+    font-size: 12px;
+    line-height: 24px;
+    margin-right: 65px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.linktel {
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    margin-right: 96px;
+    text-decoration: none;
+}

@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    // background: #02082A;
+    background-color: #333;
+    font-family: 'Micra', arial;
+    color: #fff;
+}
+
+.container {
+    width: 95%;
+    max-width: 1690px;
+    margin: auto;
+    position: relative;
+    &__project {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

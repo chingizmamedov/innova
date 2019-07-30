@@ -1,0 +1,33 @@
+.main__h1 {
+    font-size: 60px;
+    line-height: 72px;
+    text-align: center;
+    margin-bottom: 84px;
+}
+
+.btn-link {
+    padding: 13px;
+    background: rgba(0, 229, 168, 0.2);
+    border: 1px solid rgba(0, 229, 168, 0.28);
+    box-sizing: border-box;
+    display: block;
+    margin: auto;
+    width: 335px;
+    text-align: center;
+    left: 0;
+    right: 0;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-bottom: 206px;
+}
+.home-links {
+    margin: auto;
+    display: block;
+    width: 600px;
+    & a {
+        color: #fff;
+        text-decoration: none;
+        margin: 10px;
+    }
+}

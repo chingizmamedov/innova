@@ -1,0 +1,26 @@
+.project__big {
+    width: 1400px;
+    height: 720px;
+    background-image: url(../images/123.png);
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project__type {
+    width: 100%;
+    padding-right: 87px;
+    text-align: right;
+    & p {
+        font-size: 32px;
+        line-height: 40px;
+        padding: 22px;
+        cursor: pointer;
+        transition: .3s;
+        &:hover {
+            transform: translateX(-10px);
+            display: inline-block;
+        }
+    }
+}
