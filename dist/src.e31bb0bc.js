@@ -29157,7 +29157,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.BUDGET_INN = exports.PROJECT_TYPE = exports.STEP_ID = exports.ADD_TODO = void 0;
+exports.SET_TIME = exports.SET_STAGE = exports.BUDGET_INN = exports.PROJECT_TYPE = exports.STEP_ID = exports.ADD_TODO = void 0;
 var ADD_TODO = "ADD_TODO";
 exports.ADD_TODO = ADD_TODO;
 var STEP_ID = "STEP_ID";
@@ -29166,6 +29166,10 @@ var PROJECT_TYPE = "PROJECT_TYPE";
 exports.PROJECT_TYPE = PROJECT_TYPE;
 var BUDGET_INN = "BUDGET_INN";
 exports.BUDGET_INN = BUDGET_INN;
+var SET_STAGE = "SET_STAGE";
+exports.SET_STAGE = SET_STAGE;
+var SET_TIME = "SET_TIME";
+exports.SET_TIME = SET_TIME;
 },{}],"reducer/projectReducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -29178,7 +29182,7 @@ var _actionTypes = require("../actions/actionTypes");
 
 var initialState = {
   stepId: 1,
-  projectStageprojectType: '',
+  projectType: [],
   budget: [],
   projectStage: '',
   startTime: '',
@@ -29225,6 +29229,28 @@ function _default() {
           budget: action.payload,
           projectStage: state.projectStage,
           startTime: state.startTime
+        };
+      }
+
+    case _actionTypes.SET_STAGE:
+      {
+        return {
+          stepId: state.stepId,
+          projectType: state.projectType,
+          budget: state.budget,
+          projectStage: action.payload,
+          startTime: state.startTime
+        };
+      }
+
+    case _actionTypes.SET_TIME:
+      {
+        return {
+          stepId: state.stepId,
+          projectType: state.projectType,
+          budget: state.budget,
+          projectStage: state.projectStage,
+          startTime: action.payload
         };
       }
 
@@ -32234,7 +32260,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.doubleAdd = doubleAdd;
 exports.doubleAddBudget = doubleAddBudget;
-exports.setPriceList = exports.setBudget = exports.setProject = exports.changeStepId = exports.addTodo = void 0;
+exports.doubleAddStage = doubleAddStage;
+exports.doubleAddTime = doubleAddTime;
+exports.setTime = exports.setStage = exports.setPriceList = exports.setBudget = exports.setProject = exports.changeStepId = exports.addTodo = void 0;
 
 var _actionTypes = require("./actionTypes");
 
@@ -32288,6 +32316,24 @@ var setPriceList = function setPriceList(budgetCost) {
 
 exports.setPriceList = setPriceList;
 
+var setStage = function setStage(stageId) {
+  return {
+    type: _actionTypes.SET_STAGE,
+    payload: stageId
+  };
+};
+
+exports.setStage = setStage;
+
+var setTime = function setTime(timeId) {
+  return {
+    type: _actionTypes.SET_TIME,
+    payload: timeId
+  };
+};
+
+exports.setTime = setTime;
+
 function doubleAdd(stepId, projectName) {
   return function (dispatch) {
     dispatch(setProject(projectName));
@@ -32299,6 +32345,20 @@ function doubleAddBudget(stepId, budgetCost) {
   return function (dispatch) {
     dispatch(changeStepId(stepId));
     dispatch(setBudget(budgetCost));
+  };
+}
+
+function doubleAddStage(stepId, stageId) {
+  return function (dispatch) {
+    dispatch(changeStepId(stepId));
+    dispatch(setStage(stageId));
+  };
+}
+
+function doubleAddTime(stepId, timeId) {
+  return function (dispatch) {
+    dispatch(changeStepId(stepId));
+    dispatch(setTime(timeId));
   };
 }
 },{"./actionTypes":"actions/actionTypes.js"}],"components/Projects/ProjectType.js":[function(require,module,exports) {
@@ -32324,23 +32384,23 @@ function ProjectType(props) {
     className: "project__type"
   }, _react.default.createElement("p", {
     onClick: function onClick() {
-      return props.doubleAdd(2, 'shopping');
+      return props.doubleAdd(2, ['shopping', 'Интернет-магазин']);
     }
   }, "\u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442-\u043C\u0430\u0433\u0430\u0437\u0438\u043D"), _react.default.createElement("p", {
     onClick: function onClick() {
-      return props.doubleAdd(2, 'landing');
+      return props.doubleAdd(2, ['landing', 'Landing Page']);
     }
   }, "Landing Page"), _react.default.createElement("p", {
     onClick: function onClick() {
-      return props.doubleAdd(2, 'corparative');
+      return props.doubleAdd(2, ['corparative', 'Корпоративный сайт']);
     }
   }, "\u041A\u043E\u0440\u043F\u043E\u0440\u0430\u0442\u0438\u0432\u043D\u044B\u0439 \u0441\u0430\u0439\u0442"), _react.default.createElement("p", {
     onClick: function onClick() {
-      return props.doubleAdd(2, 'designe');
+      return props.doubleAdd(2, ['designe', 'Дизайн, Редизайн сайта']);
     }
   }, "\u0414\u0438\u0437\u0430\u0439\u043D, \u0420\u0435\u0434\u0438\u0437\u0430\u0439\u043D \u0441\u0430\u0439\u0442\u0430"), _react.default.createElement("p", {
     onClick: function onClick() {
-      return props.doubleAdd(2, 'react');
+      return props.doubleAdd(2, ['react', 'Сайт на React']);
     }
   }, "\u0421\u0430\u0439\u0442 \u043D\u0430 React")));
 }
@@ -32479,59 +32539,109 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _projectcost = _interopRequireDefault(require("../../api/ProjectCosts/projectcost"));
 
 var _reactRedux = require("react-redux");
 
+var _reactRouterDom = require("react-router-dom");
+
 var _index = require("../../actions/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ProjectBudget(props) {
-  var priceList;
-  setTimeout(function () {
-    console.log("TCL: ProjectBudget -> priceList", priceList);
-    console.log("TCL: ProjectBudget -> apiProjectType", _projectcost.default);
-  }, 1000);
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-  for (var key in _projectcost.default) {
-    if (key === props.projectType) {
-      console.log('apiProjectType[key]', _projectcost.default[key]);
-      priceList = _projectcost.default[key];
-    }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ProjectBudget =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ProjectBudget, _React$Component);
+
+  function ProjectBudget(props) {
+    _classCallCheck(this, ProjectBudget);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ProjectBudget).call(this, props));
   }
 
-  var listBlock = _react.default.createElement("div", {
-    className: "project__type"
-  }, _react.default.createElement("p", {
-    onClick: function onClick() {
-      return props.doubleAdd(3, [priceList.start.from, priceList.start.to]);
+  _createClass(ProjectBudget, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      console.log('projectType', this.props.projectType);
     }
-  }, "\u043E\u0442 ", priceList.start.from, " \u0434\u043E ", priceList.start.to, " ", _react.default.createElement("span", null, priceList.start.subtext)), _react.default.createElement("p", {
-    onClick: function onClick() {
-      return props.doubleAdd(3, [priceList.minimal.from, priceList.minimal.to]);
-    }
-  }, "\u043E\u0442 ", priceList.minimal.from, " \u0434\u043E ", priceList.minimal.to, _react.default.createElement("span", null, priceList.minimal.subtext)), _react.default.createElement("p", {
-    onClick: function onClick() {
-      return props.doubleAdd(3, [priceList.middle.from, priceList.middle.to]);
-    }
-  }, "\u043E\u0442 ", priceList.middle.from, " \u0434\u043E ", priceList.middle.to, _react.default.createElement("span", null, priceList.middle.subtext)), _react.default.createElement("p", {
-    onClick: function onClick() {
-      return props.doubleAdd(3, [priceList.bissunez.from]);
-    }
-  }, "\u043E\u0442 ", priceList.bissunez.from, " ", _react.default.createElement("span", null, priceList.bissunez.subtext), "..."));
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
 
-  return _react.default.createElement("div", {
-    className: "project__big"
-  }, listBlock);
-}
+      var priceList;
+
+      for (var key in _projectcost.default) {
+        if (key === this.props.projectType) {
+          console.log('apiProjectType[key]', _projectcost.default[key]);
+          priceList = _projectcost.default[key];
+        }
+      }
+
+      var listBlock = _react.default.createElement("div", {
+        className: "project__type"
+      }, _react.default.createElement("p", {
+        onClick: function onClick() {
+          return _this.props.doubleAdd(3, [priceList.start.from, priceList.start.to]);
+        }
+      }, "\u043E\u0442 ", priceList.start.from, " \u0434\u043E ", priceList.start.to, _react.default.createElement("br", null), " ", _react.default.createElement("span", null, priceList.start.subtext)), _react.default.createElement("p", {
+        onClick: function onClick() {
+          return _this.props.doubleAdd(3, [priceList.minimal.from, priceList.minimal.to]);
+        }
+      }, "\u043E\u0442 ", priceList.minimal.from, " \u0434\u043E ", priceList.minimal.to, _react.default.createElement("br", null), " ", _react.default.createElement("span", null, priceList.minimal.subtext)), _react.default.createElement("p", {
+        onClick: function onClick() {
+          return _this.props.doubleAdd(3, [priceList.middle.from, priceList.middle.to]);
+        }
+      }, "\u043E\u0442 ", priceList.middle.from, " \u0434\u043E ", priceList.middle.to, _react.default.createElement("br", null), " ", _react.default.createElement("span", null, priceList.middle.subtext)), _react.default.createElement("p", {
+        onClick: function onClick() {
+          return _this.props.doubleAdd(3, [priceList.bissunez.from]);
+        }
+      }, "\u043E\u0442 ", priceList.bissunez.from, _react.default.createElement("br", null), "  ", _react.default.createElement("span", null, priceList.bissunez.subtext), "..."));
+
+      return _react.default.createElement("div", {
+        className: "project__big"
+      }, _react.default.createElement("span", {
+        style: {
+          position: 'absolute',
+          top: '0'
+        },
+        onClick: function onClick() {
+          return _this.props.changeStepId(1);
+        }
+      }, "GO back"), listBlock);
+    }
+  }]);
+
+  return ProjectBudget;
+}(_react.default.Component);
 
 var matToProps = function matToProps(store) {
-  console.log('store.projectReducer.projectType', store.projectReducer.projectType);
+  console.log('store ion', store);
   return {
-    projectType: store.projectReducer.projectType
+    projectType: store.projectReducer.projectType[0]
   };
 };
 
@@ -32539,65 +32649,17 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     doubleAdd: function doubleAdd(stepId, budgetCost) {
       return dispatch((0, _index.doubleAddBudget)(stepId, budgetCost));
+    },
+    changeStepId: function changeStepId(stepId) {
+      return dispatch((0, _index.changeStepId)(stepId));
     }
   };
 };
 
-var _default = (0, _reactRedux.connect)(matToProps, mapDispatch)(ProjectBudget);
+var _default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(matToProps, mapDispatch)(ProjectBudget));
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../../api/ProjectCosts/projectcost":"api/ProjectCosts/projectcost.js","react-redux":"../node_modules/react-redux/es/index.js","../../actions/index.js":"actions/index.js"}],"components/Projects/ProjectStage.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = ProjectStage;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function ProjectStage() {
-  return _react.default.createElement("div", {
-    className: "project__big"
-  }, _react.default.createElement("h2", null, "Project stage"));
-}
-},{"react":"../node_modules/react/index.js"}],"components/Projects/ProjectTime.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = ProjectTime;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function ProjectTime() {
-  return _react.default.createElement("div", {
-    className: "project__big"
-  }, _react.default.createElement("h2", null, "Project time"));
-}
-},{"react":"../node_modules/react/index.js"}],"components/Projects/ProjectCallback.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = ProjectCallback;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function ProjectCallback() {
-  return _react.default.createElement("div", {
-    className: "project__big"
-  }, _react.default.createElement("h2", null, "Callback"));
-}
-},{"react":"../node_modules/react/index.js"}],"components/Projects/ProjectWrapper.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../api/ProjectCosts/projectcost":"api/ProjectCosts/projectcost.js","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../actions/index.js":"actions/index.js"}],"components/Projects/ProjectStage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32606,6 +32668,184 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _index = require("../../actions/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ProjectStage(props) {
+  return _react.default.createElement("div", {
+    className: "project__big"
+  }, _react.default.createElement("span", {
+    style: {
+      position: 'absolute',
+      top: '0'
+    },
+    onClick: function onClick() {
+      return props.changeStepId(1);
+    }
+  }, "GO back"), _react.default.createElement("div", {
+    className: "project__type"
+  }, _react.default.createElement("p", {
+    onClick: function onClick() {
+      return props.doubleAddStage(4, 'Новый проект');
+    }
+  }, "\u041D\u043E\u0432\u044B\u0439 \u043F\u0440\u043E\u0435\u043A\u0442"), _react.default.createElement("p", {
+    onClick: function onClick() {
+      return props.doubleAddStage(4, 'Существуещий проект');
+    }
+  }, "\u0421\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0449\u0438\u0439 \u043F\u0440\u043E\u0435\u043A\u0442")));
+}
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    doubleAddStage: function doubleAddStage(stepId, stageId) {
+      return dispatch((0, _index.doubleAddStage)(stepId, stageId));
+    },
+    changeStepId: function changeStepId(stepId) {
+      return dispatch((0, _index.changeStepId)(stepId));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(null, mapDispatch)(ProjectStage);
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../../actions/index.js":"actions/index.js"}],"components/Projects/ProjectTime.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _index = require("../../actions/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ProjectTime(props) {
+  return _react.default.createElement("div", {
+    className: "project__big"
+  }, _react.default.createElement("span", {
+    style: {
+      position: 'absolute',
+      top: '0'
+    },
+    onClick: function onClick() {
+      return props.changeStepId(1);
+    }
+  }, "GO back"), _react.default.createElement("div", {
+    className: "project__type"
+  }, _react.default.createElement("p", {
+    onClick: function onClick() {
+      return props.doubleAddTime(5, 'Немедленно');
+    }
+  }, "\u041D\u0435\u043C\u0435\u0434\u043B\u0435\u043D\u043D\u043E"), _react.default.createElement("p", {
+    onClick: function onClick() {
+      return props.doubleAddTime(5, 'В течении недели');
+    }
+  }, "\u0412 \u0442\u0435\u0447\u0435\u043D\u0438\u0438 \u043D\u0435\u0434\u0435\u043B\u0438"), _react.default.createElement("p", {
+    onClick: function onClick() {
+      return props.doubleAddTime(5, 'В течении месяца');
+    }
+  }, "\u0412 \u0442\u0435\u0447\u0435\u043D\u0438\u0438 \u043C\u0435\u0441\u044F\u0446\u0430"), _react.default.createElement("p", {
+    onClick: function onClick() {
+      return props.doubleAddTime(5, 'непринципиально');
+    }
+  }, "\u043D\u0435\u043F\u0440\u0438\u043D\u0446\u0438\u043F\u0438\u0430\u043B\u044C\u043D\u043E")));
+}
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    doubleAddTime: function doubleAddTime(stepId, timeId) {
+      return dispatch((0, _index.doubleAddTime)(stepId, timeId));
+    },
+    changeStepId: function changeStepId(stepId) {
+      return dispatch((0, _index.changeStepId)(stepId));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(null, mapDispatch)(ProjectTime);
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../../actions/index.js":"actions/index.js"}],"components/Projects/ProjectCallback.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _index = require("../../actions/index.js");
+
+var _reactRedux = require("react-redux");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ProjectCallback(props) {
+  return _react.default.createElement("div", {
+    className: "project__big"
+  }, _react.default.createElement("span", {
+    style: {
+      position: 'absolute',
+      top: '0'
+    },
+    onClick: function onClick() {
+      return props.changeStepId(1);
+    }
+  }, "GO back"), _react.default.createElement("div", {
+    className: "project_callback"
+  }, _react.default.createElement("form", null, "\u041C\u0435\u043D\u044F \u0437\u043E\u0432\u0443\u0442 ", _react.default.createElement("input", {
+    placeholder: "\u0418\u043C\u044F"
+  }), ", \u043C\u043D\u0435 \u043D\u0443\u0436\u043D\u043E \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C ", _react.default.createElement("input", {
+    value: props.projectType,
+    readonly: true
+  }), ". \u041C\u043E\u044F \u043F\u043E\u0447\u0442\u0430 ", _react.default.createElement("input", {
+    type: "mail",
+    placeholder: "suka@email.com"
+  }), ", \u0442\u0435\u043B\u0435\u0444\u043E\u043D ", _react.default.createElement("input", {
+    type: "tel",
+    placeholder: "+7 (___) ___-__-__"
+  }), " \u042F \u0445\u043E\u0447\u0443 ", props.startTime, " \u043D\u0430\u0447\u0430\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u043F\u0440\u043E\u0435\u043A\u0442, \u0441 \u0431\u044E\u0436\u0434\u0435\u0442\u043E\u043C \u043E\u0442 ", props.budget[0], " \u0434\u043E ", props.budget[1], " \u0442\u044B\u0441\u044F\u0447")));
+}
+
+var matToProps = function matToProps(store) {
+  return {
+    projectType: store.projectReducer.projectType[1],
+    startTime: store.projectReducer.startTime,
+    budget: store.projectReducer.budget
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    changeStepId: function changeStepId(stepId) {
+      return dispatch((0, _index.changeStepId)(stepId));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(matToProps, mapDispatch)(ProjectCallback);
+
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../../actions/index.js":"actions/index.js","react-redux":"../node_modules/react-redux/es/index.js"}],"components/Projects/ProjectWrapper.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactRedux = require("react-redux");
 
@@ -32619,41 +32859,104 @@ var _ProjectTime = _interopRequireDefault(require("./ProjectTime"));
 
 var _ProjectCallback = _interopRequireDefault(require("./ProjectCallback"));
 
+var _index = require("../../actions/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Project(props) {
-  if (props.stepId == 1) {
-    return _react.default.createElement(_ProjectType.default, null);
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Project =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Project, _React$Component);
+
+  function Project(props) {
+    _classCallCheck(this, Project);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Project).call(this, props));
   }
 
-  if (props.stepId == 2) {
-    return _react.default.createElement(_ProjectBudget.default, null);
-  }
+  _createClass(Project, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      var _this = this;
 
-  if (props.stepId == 3) {
-    return _react.default.createElement(_ProjectStage.default, null);
-  }
+      var pages = [['shopping', 'Интернет-магазин'], ['landing', 'Landing Page'], ['corparative', 'Корпоративный сайт'], ['designe', 'Дизайн, Редизайн сайта'], ['react', 'Сайт на React']];
+      var url = window.location.href || document.URL;
+      pages.forEach(function (item, index) {
+        var reg = new RegExp(item[0], "i");
+        var chckUrl = reg.test(url);
 
-  if (props.stepId == 4) {
-    return _react.default.createElement(_ProjectTime.default, null);
-  }
+        if (chckUrl) {
+          _this.props.doubleAdd(2, [item[0], item[1]]);
+        }
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.props.stepId == 1) {
+        return _react.default.createElement(_ProjectType.default, null);
+      }
 
-  if (props.stepId == 5) {
-    return _react.default.createElement(_ProjectCallback.default, null);
-  }
-}
+      if (this.props.stepId == 2) {
+        return _react.default.createElement(_ProjectBudget.default, null);
+      }
+
+      if (this.props.stepId == 3) {
+        return _react.default.createElement(_ProjectStage.default, null);
+      }
+
+      if (this.props.stepId == 4) {
+        return _react.default.createElement(_ProjectTime.default, null);
+      }
+
+      if (this.props.stepId == 5) {
+        return _react.default.createElement(_ProjectCallback.default, null);
+      }
+    }
+  }]);
+
+  return Project;
+}(_react.default.Component);
 
 var mapState = function mapState(state) {
-  console.log('state', state.projectReducer.stepId);
+  console.log('state', state);
   return {
     stepId: state.projectReducer.stepId
   };
 };
 
-var _default = (0, _reactRedux.connect)(mapState)(Project);
+var mapToDispath = function mapToDispath(dispatch) {
+  return {
+    doubleAdd: function doubleAdd(stepId, projectName) {
+      return dispatch((0, _index.doubleAdd)(stepId, projectName));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapState, mapToDispath)(Project);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./ProjectType":"components/Projects/ProjectType.js","./ProjectBudget":"components/Projects/ProjectBudget.js","./ProjectStage":"components/Projects/ProjectStage.js","./ProjectTime":"components/Projects/ProjectTime.js","./ProjectCallback":"components/Projects/ProjectCallback.js"}],"components/pages/Projects.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./ProjectType":"components/Projects/ProjectType.js","./ProjectBudget":"components/Projects/ProjectBudget.js","./ProjectStage":"components/Projects/ProjectStage.js","./ProjectTime":"components/Projects/ProjectTime.js","./ProjectCallback":"components/Projects/ProjectCallback.js","../../actions/index.js":"actions/index.js"}],"components/pages/Projects.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32692,43 +32995,39 @@ function Projects(_ref) {
   }, _react.default.createElement("li", {
     className: "form-btn__active",
     onClick: function onClick() {
-      return props.changeStepId(1);
+      props.stepId >= 2 ? props.changeStepId(1) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
     to: "".concat(match.url, "/a")
   }, "1. \u0422\u0418\u041F \u041F\u0420\u041E\u0415\u041A\u0422\u0410")), _react.default.createElement("li", {
     className: props.stepId >= 2 ? "form-btn__active" : "form-btn",
     onClick: function onClick() {
-      return props.changeStepId(2);
+      props.stepId > 2 ? props.changeStepId(2) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
     to: "".concat(match.url, "/b")
   }, "2. \u0411\u044E\u0434\u0436\u0435\u0442")), _react.default.createElement("li", {
     className: props.stepId >= 3 ? "form-btn__active" : "form-btn",
     onClick: function onClick() {
-      return props.changeStepId(3);
+      props.stepId > 3 ? props.changeStepId(3) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
     to: "".concat(match.url, "/c")
   }, "3. \u044D\u0442\u0430\u043F \u043F\u0440\u043E\u0435\u043A\u0442\u0430")), _react.default.createElement("li", {
     className: props.stepId >= 4 ? "form-btn__active" : "form-btn",
     onClick: function onClick() {
-      return props.changeStepId(4);
+      props.stepId > 4 ? props.changeStepId(4) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
     to: "".concat(match.url, "/d")
   }, "4. \u043A\u043E\u0433\u0434\u0430 \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u043C")), _react.default.createElement("li", {
-    className: props.stepId >= 5 ? "form-btn__active" : "form-btn",
-    onClick: function onClick() {
-      return props.changeStepId(5);
-    }
+    className: props.stepId == 5 ? "form-btn__active" : "form-btn"
   }, _react.default.createElement(_reactRouterDom.Link, {
     to: "".concat(match.url, "/e")
   }, "5. \u041E\u0431\u0440\u0430\u0442\u043D\u0430\u044F \u0441\u0432\u044F\u0437\u044C"))), _react.default.createElement(_ProjectWrapper.default, null));
 }
 
 var matToProps = function matToProps(store) {
-  console.log('match.url', store);
   return {
     stepId: store.projectReducer.stepId
   };
@@ -33048,7 +33347,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51236" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49413" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

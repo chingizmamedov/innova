@@ -1,8 +1,8 @@
-import { ADD_TODO, STEP_ID, PROJECT_TYPE, BUDGET_INN } from "../actions/actionTypes";
+import { ADD_TODO, STEP_ID, PROJECT_TYPE, BUDGET_INN, SET_STAGE, SET_TIME } from "../actions/actionTypes";
 
 const initialState = {
   stepId: 1,
-  projectStageprojectType: '',
+  projectType: [],
   budget: [],
   projectStage: '',
   startTime: '',
@@ -39,6 +39,24 @@ export default function(state = initialState, action) {
         budget: action.payload,
         projectStage: state.projectStage,
         startTime: state.startTime
+      }
+    }
+    case SET_STAGE: {
+      return {
+        stepId: state.stepId,
+        projectType: state.projectType,
+        budget: state.budget,
+        projectStage: action.payload,
+        startTime: state.startTime
+      }
+    }
+    case SET_TIME: {
+      return {
+        stepId: state.stepId,
+        projectType: state.projectType,
+        budget: state.budget,
+        projectStage: state.projectStage,
+        startTime: action.payload
       }
     }
     default:

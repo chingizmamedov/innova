@@ -1,24 +1,27 @@
-import React from 'react'
+import React, { Component } from 'react'
 import apiProjectType from '../../api/ProjectCosts/projectcost'
 import { connect } from 'react-redux';
-import { doubleAddBudget } from '../../actions/index.js'
+import { withRouter } from 'react-router-dom';
+import { doubleAddBudget, changeStepId } from '../../actions/index.js'
 
 
 
-function ProjectBudget(props) {
-
+class ProjectBudget extends React.Component {
+        constructor(props) {
+            super(props)
+        }
+  
+        componentWillMount() {
+            console.log('projectType', this.props.projectType)
+        }
+    
+render(){
     let priceList
-    
-    setTimeout(() => {
 
-        console.log("TCL: ProjectBudget -> priceList", priceList)
-        console.log("TCL: ProjectBudget -> apiProjectType", apiProjectType)
 
-    }, 1000);
-    
 
     for (var key in apiProjectType) {
-        if(key === props.projectType) {
+        if(key === this.props.projectType) {
             
             console.log('apiProjectType[key]',apiProjectType[key])
             priceList = apiProjectType[key]
@@ -27,10 +30,10 @@ function ProjectBudget(props) {
     }
 
     const listBlock = (<div className="project__type">
-        <p onClick={()=> props.doubleAdd(3, [priceList.start.from, priceList.start.to])}>от {priceList.start.from} до {priceList.start.to} <span>{priceList.start.subtext}</span></p>
-        <p onClick={()=> props.doubleAdd(3, [priceList.minimal.from, priceList.minimal.to])}>от {priceList.minimal.from} до {priceList.minimal.to}<span>{priceList.minimal.subtext}</span></p>
-        <p onClick={()=> props.doubleAdd(3, [priceList.middle.from, priceList.middle.to])}>от {priceList.middle.from} до {priceList.middle.to}<span>{priceList.middle.subtext}</span></p>
-        <p onClick={()=> props.doubleAdd(3, [priceList.bissunez.from])}>от {priceList.bissunez.from} <span>{priceList.bissunez.subtext}</span>...</p>  
+        <p onClick={()=> this.props.doubleAdd(3, [priceList.start.from, priceList.start.to])}>от {priceList.start.from} до {priceList.start.to}<br /> <span>{priceList.start.subtext}</span></p>
+        <p onClick={()=> this.props.doubleAdd(3, [priceList.minimal.from, priceList.minimal.to])}>от {priceList.minimal.from} до {priceList.minimal.to}<br /> <span>{priceList.minimal.subtext}</span></p>
+        <p onClick={()=> this.props.doubleAdd(3, [priceList.middle.from, priceList.middle.to])}>от {priceList.middle.from} до {priceList.middle.to}<br /> <span>{priceList.middle.subtext}</span></p>
+        <p onClick={()=> this.props.doubleAdd(3, [priceList.bissunez.from])}>от {priceList.bissunez.from}<br />  <span>{priceList.bissunez.subtext}</span>...</p>  
         </div>)
 
 
@@ -38,22 +41,29 @@ function ProjectBudget(props) {
 
     return (
         <div className="project__big">
+        <span style={{position: 'absolute', top: '0'}} onClick={() => this.props.changeStepId(1)}>GO back</span>
             {listBlock}
         </div>
     )
 }
+    
+}
+
 
 const matToProps = (store) => {
-    console.log('store.projectReducer.projectType', store.projectReducer.projectType)
+    console.log('store ion', store)
     return {
-      projectType: store.projectReducer.projectType
+      projectType: store.projectReducer.projectType[0]
     }
   }
 
 const mapDispatch = dispatch => {
     return {
-        doubleAdd: (stepId, budgetCost) => dispatch(doubleAddBudget(stepId, budgetCost))
+        doubleAdd: (stepId, budgetCost) => dispatch(doubleAddBudget(stepId, budgetCost)),
+        changeStepId: (stepId) => dispatch(changeStepId(stepId))
     }
 }
 
-export default connect(matToProps, mapDispatch)(ProjectBudget)
+export default withRouter(
+    connect(matToProps, mapDispatch)(ProjectBudget)
+)

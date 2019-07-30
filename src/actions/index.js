@@ -1,4 +1,4 @@
-import { ADD_TODO, STEP_ID, PROJECT_TYPE, BUDGET_INN, SET_PRICE_LIST } from "./actionTypes";
+import { ADD_TODO, STEP_ID, PROJECT_TYPE, BUDGET_INN, SET_PRICE_LIST, SET_STAGE, SET_TIME } from "./actionTypes";
 
 let nextTodoId = 0;
 
@@ -30,6 +30,16 @@ export const setPriceList = (budgetCost) => ({
   payload: budgetCost
 });
 
+export const setStage = (stageId) => ({
+  type: SET_STAGE,
+  payload: stageId
+});
+
+export const setTime = (timeId) => ({
+  type: SET_TIME,
+  payload: timeId
+});
+
 export function doubleAdd(stepId, projectName) {
   return dispatch => {
     dispatch(setProject(projectName))
@@ -42,5 +52,21 @@ export function doubleAddBudget(stepId, budgetCost) {
     
     dispatch(changeStepId(stepId))
     dispatch(setBudget(budgetCost))
+  }
+}
+
+export function doubleAddStage(stepId, stageId) {
+  return dispatch => {
+    
+    dispatch(changeStepId(stepId))
+    dispatch(setStage(stageId))
+  }
+}
+
+export function doubleAddTime(stepId, timeId) {
+  return dispatch => {
+    
+    dispatch(changeStepId(stepId))
+    dispatch(setTime(timeId))
   }
 }

@@ -6,11 +6,11 @@ function ProjectType(props) {
     return (
         <div className="project__big">
             <div className="project__type">
-                <p onClick={()=> props.doubleAdd(2, 'shopping')}>Интернет-магазин</p>
-                <p onClick={()=> props.doubleAdd(2, 'landing')}>Landing Page</p>
-                <p onClick={()=> props.doubleAdd(2, 'corparative')}>Корпоративный сайт</p>
-                <p onClick={()=> props.doubleAdd(2, 'designe')}>Дизайн, Редизайн сайта</p>
-                <p onClick={()=> props.doubleAdd(2, 'react')}>Сайт на React</p>
+                <p onClick={()=> props.doubleAdd(2, ['shopping', 'Интернет-магазин'])}>Интернет-магазин</p>
+                <p onClick={()=> props.doubleAdd(2, ['landing', 'Landing Page'])}>Landing Page</p>
+                <p onClick={()=> props.doubleAdd(2, ['corparative', 'Корпоративный сайт'])}>Корпоративный сайт</p>
+                <p onClick={()=> props.doubleAdd(2, ['designe', 'Дизайн, Редизайн сайта'])}>Дизайн, Редизайн сайта</p>
+                <p onClick={()=> props.doubleAdd(2, ['react', 'Сайт на React'])}>Сайт на React</p>
             </div>
         </div>
     )

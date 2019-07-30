@@ -580,4 +580,14 @@ body {
   display: inline-block;
 }
 
+.project_callback {
+  max-width: 800px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 500px;
+  font-size: 20px;
+  line-height: 38px;
+}
+
 /*# sourceMappingURL=/main.77bb5cfd.css.map */
