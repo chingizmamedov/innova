@@ -10,10 +10,6 @@ class ProjectBudget extends React.Component {
         constructor(props) {
             super(props)
         }
-  
-        componentWillMount() {
-            console.log('projectType', this.props.projectType)
-        }
     
 render(){
     let priceList
@@ -23,7 +19,6 @@ render(){
     for (var key in apiProjectType) {
         if(key === this.props.projectType) {
             
-            console.log('apiProjectType[key]',apiProjectType[key])
             priceList = apiProjectType[key]
 
         }

@@ -63,7 +63,6 @@ class Project extends React.Component {
 }
 
 const mapState = (state) => {
-    console.log('state', state)
     return {
         stepId: state.projectReducer.stepId
     }

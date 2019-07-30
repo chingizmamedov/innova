@@ -15,28 +15,28 @@ function Projects({ match, ...props }) {
               props.stepId >=2 ? props.changeStepId(1) : null
             }
           }>
-            <Link to={`${match.url}/a`}>1. ТИП ПРОЕКТА</Link>
+            <Link to={`${match.url}/`}>1. ТИП ПРОЕКТА</Link>
           </li>
           <li className={props.stepId >=2 ? "form-btn__active" : "form-btn"} onClick={() => {
               props.stepId >2 ? props.changeStepId(2) : null
             }
           }>
-            <Link to={`${match.url}/b`}>2. Бюджет</Link>
+            <Link to={`${match.url}/`}>2. Бюджет</Link>
           </li>
           <li className={props.stepId >=3 ? "form-btn__active" : "form-btn"} onClick={() => {
               props.stepId >3 ? props.changeStepId(3) : null
             }
           }>
-            <Link to={`${match.url}/c`}>3. этап проекта</Link>
+            <Link to={`${match.url}/`}>3. этап проекта</Link>
           </li>
           <li className={props.stepId >=4 ? "form-btn__active" : "form-btn"} onClick={() => {
               props.stepId >4 ? props.changeStepId(4) : null
             }
           }>
-            <Link to={`${match.url}/d`}>4. когда начинаем</Link>
+            <Link to={`${match.url}/`}>4. когда начинаем</Link>
           </li>
           <li className={props.stepId == 5 ? "form-btn__active" : "form-btn"}>
-            <Link to={`${match.url}/e`}>5. Обратная связь</Link>
+            <Link to={`${match.url}/`}>5. Обратная связь</Link>
           </li>
         </ul>
         <ProjectWrapper />    

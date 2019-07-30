@@ -32583,11 +32583,6 @@ function (_React$Component) {
   }
 
   _createClass(ProjectBudget, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      console.log('projectType', this.props.projectType);
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this = this;
@@ -32596,7 +32591,6 @@ function (_React$Component) {
 
       for (var key in _projectcost.default) {
         if (key === this.props.projectType) {
-          console.log('apiProjectType[key]', _projectcost.default[key]);
           priceList = _projectcost.default[key];
         }
       }
@@ -32815,7 +32809,7 @@ function ProjectCallback(props) {
   }), ", \u0442\u0435\u043B\u0435\u0444\u043E\u043D ", _react.default.createElement("input", {
     type: "tel",
     placeholder: "+7 (___) ___-__-__"
-  }), " \u042F \u0445\u043E\u0447\u0443 ", props.startTime, " \u043D\u0430\u0447\u0430\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u043F\u0440\u043E\u0435\u043A\u0442, \u0441 \u0431\u044E\u0436\u0434\u0435\u0442\u043E\u043C \u043E\u0442 ", props.budget[0], " \u0434\u043E ", props.budget[1], " \u0442\u044B\u0441\u044F\u0447")));
+  }), " \u042F \u0445\u043E\u0447\u0443 ", props.startTime, " \u043D\u0430\u0447\u0430\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u043F\u0440\u043E\u0435\u043A\u0442, \u0441 \u0431\u044E\u0436\u0434\u0435\u0442\u043E\u043C \u043E\u0442 ", props.budget[0], " ", props.budget[1] && "\u0434\u043E ".concat(props.budget[1], " \u0442\u044B\u0441\u044F\u0447"))));
 }
 
 var matToProps = function matToProps(store) {
@@ -32939,7 +32933,6 @@ function (_React$Component) {
 }(_react.default.Component);
 
 var mapState = function mapState(state) {
-  console.log('state', state);
   return {
     stepId: state.projectReducer.stepId
   };
@@ -32998,32 +32991,32 @@ function Projects(_ref) {
       props.stepId >= 2 ? props.changeStepId(1) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
-    to: "".concat(match.url, "/a")
+    to: "".concat(match.url, "/")
   }, "1. \u0422\u0418\u041F \u041F\u0420\u041E\u0415\u041A\u0422\u0410")), _react.default.createElement("li", {
     className: props.stepId >= 2 ? "form-btn__active" : "form-btn",
     onClick: function onClick() {
       props.stepId > 2 ? props.changeStepId(2) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
-    to: "".concat(match.url, "/b")
+    to: "".concat(match.url, "/")
   }, "2. \u0411\u044E\u0434\u0436\u0435\u0442")), _react.default.createElement("li", {
     className: props.stepId >= 3 ? "form-btn__active" : "form-btn",
     onClick: function onClick() {
       props.stepId > 3 ? props.changeStepId(3) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
-    to: "".concat(match.url, "/c")
+    to: "".concat(match.url, "/")
   }, "3. \u044D\u0442\u0430\u043F \u043F\u0440\u043E\u0435\u043A\u0442\u0430")), _react.default.createElement("li", {
     className: props.stepId >= 4 ? "form-btn__active" : "form-btn",
     onClick: function onClick() {
       props.stepId > 4 ? props.changeStepId(4) : null;
     }
   }, _react.default.createElement(_reactRouterDom.Link, {
-    to: "".concat(match.url, "/d")
+    to: "".concat(match.url, "/")
   }, "4. \u043A\u043E\u0433\u0434\u0430 \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u043C")), _react.default.createElement("li", {
     className: props.stepId == 5 ? "form-btn__active" : "form-btn"
   }, _react.default.createElement(_reactRouterDom.Link, {
-    to: "".concat(match.url, "/e")
+    to: "".concat(match.url, "/")
   }, "5. \u041E\u0431\u0440\u0430\u0442\u043D\u0430\u044F \u0441\u0432\u044F\u0437\u044C"))), _react.default.createElement(_ProjectWrapper.default, null));
 }
 
