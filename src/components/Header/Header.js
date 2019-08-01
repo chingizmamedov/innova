@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import Drawer from '../Drawer/Drawer';
 import './header.scss'
 
-export default function Header() {
+export default function Header({match}) {
+  console.log('header match', match)
     return (
       <header className="header container">
       <Link className="logo" to="/">

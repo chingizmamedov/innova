@@ -32192,7 +32192,9 @@ require("./header.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Header() {
+function Header(_ref) {
+  var match = _ref.match;
+  console.log('header match', match);
   return _react.default.createElement("header", {
     className: "header container"
   }, _react.default.createElement(_reactRouterDom.Link, {
@@ -33340,7 +33342,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49413" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50352" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -12,6 +12,10 @@
     width: 100%;
     padding-right: 87px;
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
     & p {
         font-size: 32px;
         line-height: 40px;
