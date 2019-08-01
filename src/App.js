@@ -8,7 +8,7 @@ import Layout from './components/Layout/Layout';
 class App extends Component {
     render() {
         return (
-            <HashRouter>
+            <HashRouter basename="/innova">
               <Layout />
             </HashRouter>
         )
